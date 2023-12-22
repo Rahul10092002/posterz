@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 import {
   Collapse,
@@ -10,15 +10,29 @@ import {
 import { BsCart2 } from "react-icons/bs";
 import Cart from "../cart/Cart";
 import { useSelector } from "react-redux";
+import { axiosClient } from "../../utils/axiosClient";
+import { KEY_ACCESS_TOKEN, removeItem } from "../../utils/localStorageManager";
 
 function Navbar() {
     const [openCart, setOpenCart] = useState(false);
-const [isOpen, setIsOpen] = useState(false);
-const toggle = () => setIsOpen(!isOpen);
+    const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+   const navigate = useNavigate();
     const categories = useSelector((state) => state.categoryReducer.categories);
     const cart = useSelector(state => state.cartReducer.cart);
     let totalItems = 0;
-    cart.forEach(item => totalItems += item.quantity);
+  cart.forEach(item => totalItems += item.quantity);
+async function handleLogout() {
+  try {
+    // await axiosClient.get("/auth/logout");
+    removeItem("user");
+    navigate("/login");
+  } catch (error) {
+    console.error("Logout error:", error);
+    // Display an error message to the user
+  }
+}
+
 
     return (
       <>
@@ -46,7 +60,7 @@ const toggle = () => setIsOpen(!isOpen);
             <Collapse isOpen={isOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink href="/logout">Logout</NavLink>
+                  <p onClick={handleLogout}>Logout</p>
                 </NavItem>
               </Nav>
             </Collapse>

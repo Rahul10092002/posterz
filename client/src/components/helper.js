@@ -12,20 +12,27 @@ export const storeUser = (data) => {
 };
 
 export const userData = () => {
-  const stringifiedUser = localStorage.getItem("user") || '""';
-  return JSON.parse(stringifiedUser || {});
+  try {
+    const stringifiedUser = localStorage.getItem("user") || '""';
+    return JSON.parse(stringifiedUser) || {};
+  } catch (error) {
+    console.error("Error parsing user data:", error);
+    return {};
+  }
 };
+
 
 export const Protector = ({ Component }) => {
   const navigate = useNavigate();
 
   const { jwt } = userData();
 
-  useEffect(() => {
-    if (!jwt) {
-      navigate("/login");
-    }
-  }, [navigate, jwt]);
+ useEffect(() => {
+   if (!jwt) {
+     navigate("/login?redirected=true");
+   }
+ }, [navigate, jwt]);
+
 
   return <Component />;
 };

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Col, Row, Button, FormGroup, Input } from "reactstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { storeUser } from "../../components/helper";
-
+import './login.scss'
 const initialUser = { password: "", identifier: "" };
 
 const Login = () => {
@@ -19,11 +18,13 @@ const Login = () => {
     }));
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
     const url = `http://localhost:1337/api/auth/local`;
     try {
       if (user.identifier && user.password) {
         const { data } = await axios.post(url, user);
+        console.log(data);
         if (data.jwt) {
           storeUser(data);
           toast.success("Logged in successfully!", {
@@ -32,6 +33,8 @@ const Login = () => {
           setUser(initialUser);
           navigate("/");
         }
+      } else {
+        toast.warn("Please enter both email and password.");
       }
     } catch (error) {
       toast.error(error.message, {
@@ -41,37 +44,37 @@ const Login = () => {
   };
 
   return (
-    <Row className="login">
-      <Col sm="12" md={{ size: 4, offset: 4 }}>
-        <div>
-          <h2>Login:</h2>
-          <FormGroup>
-            <Input
-              type="email"
-              name="identifier"
-              value={user.identifier}
-              onChange={handleChange}
-              placeholder="Enter your email"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Input
-              type="password"
-              name="password"
-              value={user.password}
-              onChange={handleChange}
-              placeholder="Enter password"
-            />
-          </FormGroup>
-          <Button color="primary" onClick={handleLogin}>
-            Login
-          </Button>
-          <h6>
-            Click <Link to="/registration">Here</Link> to sign up
-          </h6>
-        </div>
-      </Col>
-    </Row>
+    <div className="Login">
+      <div className="login-box">
+        <h2 className="heading">Login</h2>
+        <form onSubmit={handleLogin}>
+          <label htmlFor="identifier">Email</label>
+          <input
+            type="email"
+            className="email"
+            id="email"
+            name="identifier"
+            value={user.identifier}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            className="password"
+            id="password"
+            name="password"
+            value={user.password}
+            onChange={handleChange}
+          />
+
+          <input type="submit" className="submit" />
+        </form>
+        <p className="subheading">
+          Do not have an account? <Link to="/registration">Sign Up</Link>
+        </p>
+      </div>
+    </div>
   );
 };
 

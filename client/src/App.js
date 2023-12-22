@@ -12,6 +12,8 @@ import Login from "./components/Login/Login";
 import Logout from "./components/Logout/Logout";
 import Registration from "./components/Registration/Registeration";
 import { Protector } from "./components/helper";
+import RequireUser from "./utils/RequireUser";
+import OnlyIfNotLoggedIn from "./utils/OnlyIfNotLoggedIn";
 
 function App() {
 
@@ -27,12 +29,25 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Protector Component={Home} />} />
-            <Route path="/category/:categoryId?" element={<Collection />} />
-            <Route path="/products/:productId" element={<ProductDetail />} />
-            <Route path="/payments/:status" element={<Payments />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/registration" element={<Registration />} />
+
+            <Route element={<RequireUser />}>
+              <Route path="/" element={<Home />}/>
+                <Route path="/category/:categoryId?" element={<Collection />} />
+                <Route
+                  path="/products/:productId"
+                  element={<ProductDetail />}
+                />
+                <Route path="/payments/:status" element={<Payments />} />
+                
+              
+              <Route path="/logout" element={<Logout />} />
+            </Route>
+
+            <Route element={<OnlyIfNotLoggedIn />}>
+              <Route path="/login" element={<Login />} />
+
+              <Route path="/registration" element={<Registration />} />
+            </Route>
           </Routes>
         </main>
 
