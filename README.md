@@ -1,4 +1,4 @@
-# PosterZ - Your Ultimate E-Commerce Destination for Art Enthusiasts and Home Decor Admirers
+# PosterZ 
 
 Welcome to PosterZ, a fully operational e-commerce website tailored for art enthusiasts and home decor admirers! Our dynamic platform allows users to explore and acquire an exquisite assortment of framed posters, spanning captivating categories like Animes, TV Shows, and Sports Posters. 
 
@@ -50,10 +50,11 @@ To run PosterZ locally, follow these steps:
    ```
 
 Visit [http://localhost:3000](http://localhost:3000) in your browser to explore PosterZ.
+## Screenshots
 
-## Contribution Guidelines
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
-If you're interested in contributing to PosterZ, please follow our [Contribution Guidelines](CONTRIBUTING.md).
+
 
 ## License
 
