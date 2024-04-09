@@ -50,11 +50,6 @@ To run PosterZ locally, follow these steps:
    ```
 
 Visit [http://localhost:3000](http://localhost:3000) in your browser to explore PosterZ.
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
 
 ## License
 
